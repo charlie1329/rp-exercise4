@@ -7,6 +7,7 @@ import rp.robotics.mapping.IGridMap;
 import rp.robotics.mapping.MapUtils;
 import rp.robotics.mapping.NicksGridMap;
 import rp.robotics.mapping.RPLineMap;
+import rp.robotics.whereAmI.GridMap;
 
 public class GridMapViewer {
 
@@ -31,8 +32,8 @@ public class GridMapViewer {
 	 */
 	public static IGridMap createGridMap(RPLineMap _lineMap, int _gridXSize,
 			int _gridYSize, float _xStart, float _yStart, float _cellSize) {
-		return new NicksGridMap(_gridXSize, _gridYSize, _xStart, _yStart,
-				_cellSize, _lineMap);
+		return new GridMap(_lineMap,_gridXSize, _gridYSize, _xStart, _yStart,
+				_cellSize);
 	}
 
 	public void run() {
