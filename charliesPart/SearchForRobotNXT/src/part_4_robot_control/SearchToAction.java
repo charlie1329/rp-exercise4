@@ -59,7 +59,7 @@ public class SearchToAction
 		if(Path.size() != 0)//if not nothing
 		{
 			IList<Node<Coord>> PathNotMaybe = Path.fromMaybe();
-			for(int i = 0; i < PathNotMaybe.size()+1; i++)//+1 to account for nil
+			for(int i = 0; i < Path.fromMaybe().size()-1; i++)//+1 to account for nil
 			{
 				Node<Coord> current = PathNotMaybe.head();
 				Node<Coord> next = PathNotMaybe.tail().head();

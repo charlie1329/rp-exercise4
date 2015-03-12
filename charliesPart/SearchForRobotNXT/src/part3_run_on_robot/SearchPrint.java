@@ -1,10 +1,11 @@
 package part3_run_on_robot;
 
 import lejos.nxt.Button;
+import lists_and_maybe.IList;
 import rp.robotics.mapping.IGridMap;
 import rp.robotics.mapping.MapUtils;
+import rp.robotics.mapping.NicksGridMap;
 import rp.robotics.mapping.RPLineMap;
-import rp.robotics.visualisation.GridMapViewer;
 import graphs.*;
 import data_structures.*;
 import aStarFunctions.*;
@@ -31,13 +32,13 @@ public class SearchPrint
 	public SearchPrint() 
 	{
 		RPLineMap lineMap = MapUtils.create2014Map2();
-		this.grid = GridMapViewer.createGridMap(lineMap, 10, 7, 14, 31, 30);
+		this.grid = new NicksGridMap(10, 7, 14, 31, 30, lineMap);
 		this.graph = new Graph(grid);
 		this.start = graph.nodeWith(new Coord(0,0));
-		this.goal = graph.nodeWith(new Coord(9,6));
+		this.goal = graph.nodeWith(new Coord(3,1));
 		this.cost = new Cost(graph,start,goal);
 		this.priQueue = new PriorityQueue<Node<Coord>,Integer>(cost);
-		this.goalPred = new GoalPredicate(new Coord(9,6));
+		this.goalPred = new GoalPredicate(new Coord(3,1));
 		
 	}
 	
@@ -46,7 +47,8 @@ public class SearchPrint
 	 */
 	public void run()
 	{
-		System.out.println(graph.findPathFrom(start, goalPred, priQueue));
+		IList<Node<Coord>> path = graph.findPathFrom(start, goalPred, priQueue).fromMaybe();
+		System.out.println(path);
 		System.out.println("Search Complete!!!");
 		Button.waitForAnyPress();
 		

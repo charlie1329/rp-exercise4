@@ -19,7 +19,7 @@ public class Cost implements Function<Node<Coord>, Integer> {
 	 * @param start the start node
 	 * @param goal the goal node
 	 */
-	public Cost(Graph<Coord> graph, Node<Coord> start, Node<Coord> goal) 
+	public Cost(Graph graph, Node<Coord> start, Node<Coord> goal) 
 	{
 		this.manhattan = new ManhattanDistance(goal);
 		this.distance = new DistanceSoFar(graph, start);

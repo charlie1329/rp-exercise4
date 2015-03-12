@@ -1,6 +1,6 @@
 package Part1;
 
-import java.util.ArrayList;
+
 
 import part2.Direction;
 import part2.JunctionBehavior;

@@ -1,6 +1,7 @@
 package part_4_robot_control;
 
 import part2.JunctionBehavior;
+import part_5_obstacles.DetectObstacles;
 import ActionsForRobot.MovementChecker;
 import Part1.CalibrateBehavior;
 import Part1.DriveForwardBehavior;
@@ -31,6 +32,8 @@ public class GridSearch
 	private Graph graph;
 	private IList<MovementChecker> path;
 	private Arbitrator arby;
+	private IGridMap grid;
+	private Pose pose;
 	
 	/**constructor sets up everything for the task
 	 * 
@@ -39,12 +42,12 @@ public class GridSearch
 	{
 		this.geoff = geoff;
 		RPLineMap lineMap = MapUtils.create2014Map2();
-		IGridMap grid = new NicksGridMap(10, 7, 14, 31, 30, lineMap);
+		this.grid = new NicksGridMap(10, 7, 14, 31, 30, lineMap);
 		this.graph = new Graph(grid);
 		Node<Coord> start = this.graph.nodeWith(startC);
 		Node<Coord> inter = this.graph.nodeWith(interC);
 		Node<Coord> goal = this.graph.nodeWith(goalC);
-		Pose pose = new Pose(14,31,0);
+		this.pose = new Pose(startC.getX(),startC.getY(),0);
 		SearchToAction search = new SearchToAction(start, inter, goal, geoff,pose, graph);
 		this.path = search.getCompleteActionSet();
 	}
@@ -66,7 +69,7 @@ public class GridSearch
 		Button.waitForAnyPress();
 		DriveForwardBehavior drive = new DriveForwardBehavior(this.geoff);
 		TurnBehavior turn = new TurnBehavior(this.geoff);
-		JunctionBehavior junction = new JunctionBehavior(this.geoff, this.getPath());
+		JunctionBehavior junction = new JunctionBehavior(this.geoff, this.getPath(),this.pose, new DetectObstacles(this.geoff,this.grid));
 		CalibrateBehavior calibrate = new CalibrateBehavior(this.geoff);
 		this.arby = new Arbitrator(new Behavior[]{drive, turn, junction, calibrate});
 		arby.start();
@@ -77,7 +80,7 @@ public class GridSearch
 		GeoffSetUp geoff = new GeoffSetUp();
 		geoff.setTravelSpeed(15);
 		geoff.setRotateSpeed(80);
-		GridSearch search = new GridSearch(geoff,new Coord(1,0),new Coord(2,2), new Coord(2,4));
+		GridSearch search = new GridSearch(geoff,new Coord(0,0),new Coord(3,0), new Coord(4,1));
 		search.run();
 	}
 

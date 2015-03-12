@@ -11,7 +11,7 @@ import graphs.*;
 public class DistanceSoFar implements Function<Node<Coord>,Integer> 
 {
 
-	private Graph<Coord> graph;
+	private Graph graph;
 	private Node<Coord> startNode;
 	
 	/** constructor initialises the attributes
@@ -19,7 +19,7 @@ public class DistanceSoFar implements Function<Node<Coord>,Integer>
 	 * @param graph the graph being used
 	 * @param startNode the node started from in the search
 	 */
-	public DistanceSoFar(Graph<Coord> graph, Node<Coord> startNode) 
+	public DistanceSoFar(Graph graph, Node<Coord> startNode) 
 	{
 		this.graph = graph;
 		this.startNode = startNode;

@@ -83,7 +83,7 @@ public class TestSearch {
 			priQueue = new PriorityQueue<Node<Coord>,Integer>(cost);
 			Maybe<IList<Node<Coord>>> testPath = testGraph.findPathFrom(start,goalPred,priQueue);
 			assertEquals(1,testPath.size());//checking a path has been found
-			assertEquals(testPath.fromMaybe().head(),start);//cheking start and end nodes are correct
+			assertEquals(testPath.fromMaybe().head(),start);//checking start and end nodes are correct
 			assertEquals(testPath.fromMaybe().reverse().head(),goal);
 			for(int j = 0; j < testPath.fromMaybe().size()-1; j++)//checking for a correct path
 			{

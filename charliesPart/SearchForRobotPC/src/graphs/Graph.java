@@ -4,13 +4,21 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
 
+import aStarFunctions.Cost;
 import rp.*;
+import rp.robotics.mapping.IGridMap;
+import rp.robotics.mapping.MapUtils;
+import rp.robotics.mapping.RPLineMap;
 import lists_and_maybe.*;
 import data_structures.*;
-import aStarFunctions.*;
 
 /**class represents a graph and all operations that can be carried out on it
  * i feel it is cleaner to put these methods in this class so the nodes can be created within it
+ * this graph has been modified from my solution to the software workshop exercise
+ * the modifications are:
+ * -removing the generalisation as the graph should only work in a coordinate in this case
+ * -changing the used data structures to allow functionality within lejos
+ * -added conversion from grid map to my graph set up
  * @author Charlie Street
  *
  */
@@ -18,13 +26,13 @@ public class Graph {
 	
 	private Map<Coord,Node<Coord>> nodes;
 	private Map<Node<Coord>,Maybe<Node<Coord>>> links;
-	private GridMap grid;
+	private IGridMap grid;
 	
 	
 	/**constructor initialises Map of nodes in graph
 	 * 
 	 */
-	public Graph(GridMap grid) 
+	public Graph(IGridMap grid) 
 	{
 		this.nodes = new HashMap<Coord,Node<Coord>>();
 		this.links = new HashMap<Node<Coord>,Maybe<Node<Coord>>>();
@@ -40,12 +48,12 @@ public class Graph {
 		int xDistance = grid.getXSize();
 		int yDistance = grid.getYSize();
 		
-		for(int x = 0; x < grid.getXSize(); x++)
+		for(int x = 0; x < xDistance; x++)
 		{
-			for(int y = 0; y < grid.getYSize(); y++)
+			for(int y = 0; y < yDistance; y++)
 			{
 				Coord gridPos = new Coord(x,y);
-				Node<Coord> node = this.nodeWith(a);
+				Node<Coord> node = this.nodeWith(gridPos);
 				
 				for (int i = -1; i <= 1; i++)
 				{
@@ -207,7 +215,6 @@ public class Graph {
 				}
 				links.put(toExpand, toExpand.getParent());
 				ds.insertList(toExpand.getSuccessorsList());
-				System.out.println(ds);
 			}
 		}
 		return new Nothing<IList<Node<Coord>>>();
@@ -218,118 +225,21 @@ public class Graph {
 	/**main method creates graph for example given by Nick Hawes and then runs tests on it
 	 * in order to check it is producing correct results
 	 */
-	public static void main (String[] args)
+	/*public static void main (String[] args)
 	{
-		/*Graph<Coord> robotGraph = new Graph<Coord>();
-		int [] [] nicksGraph = {
-				{0,0,1,0,0,1}, 
-				{0,1,0,0,1,1,0,2}, 
-				{0,2,0,3,0,1}, 
-				{0,3,0,2,0,4}, 
-				{0,4,0,3,0,5}, 
-				{0,5,0,6,1,5,0,4}, 
-				{0,6,1,6,0,5}, 
-				{1,0,0,0,1,1,2,0}, 
-				{1,1,1,2,2,1,1,0,0,1}, 
-				{1,2,2,2,1,1,1,3}, 
-				{1,3,1,2,1,4,2,3}, 
-				{1,4,2,4,1,5,1,3}, 
-				{1,5,1,4,2,5,1,6,0,5}, 
-				{1,6,0,6,1,5,2,6}, 
-				{2,0,3,0,2,1,1,0}, 
-				{2,1,2,2,1,1,2,0,3,1}, 
-				{2,2,1,2,2,1,2,3,3,2}, 
-				{2,3,2,2,2,4,3,3,1,3}, 
-				{2,4,1,4,2,5,2,3,3,4}, 
-				{2,5,2,4,1,5,2,6,3,5}, 
-				{2,6,3,6,2,5,1,6}, 
-				{3,0,2,0,3,1}, 
-				{3,1,3,0,4,1,2,1,3,2}, 
-				{3,2,2,2,4,2,3,1}, 
-				{3,3,2,3,3,4}, 
-				{3,4,2,4,3,3}, 
-				{3,5,3,6,2,5,4,5}, 
-				{3,6,2,6,3,5}, 
-				{4,0}, 
-				{4,1,4,2,5,1,3,1}, 
-				{4,2,4,1,5,2,3,2}, 
-				{4,3}, 
-				{4,4}, 
-				{4,5,5,5,3,5}, 
-				{4,6}, 
-				{5,0}, 
-				{5,1,4,1,5,2,6,1}, 
-				{5,2,4,2,5,1,6,2}, 
-				{5,3}, 
-				{5,4}, 
-				{5,5,4,5,6,5}, 
-				{5,6}, 
-				{6,0,7,0,6,1}, 
-				{6,1,6,0,5,1,6,2,7,1}, 
-				{6,2,5,2,6,1,7,2}, 
-				{6,3,7,3,6,4}, 
-				{6,4,6,3,7,4}, 
-				{6,5,5,5,6,6,7,5}, 
-				{6,6,7,6,6,5}, 
-				{7,0,6,0,7,1,8,0}, 
-				{7,1,8,1,7,0,6,1,7,2}, 
-				{7,2,7,3,8,2,6,2,7,1}, 
-				{7,3,6,3,7,2,7,4,8,3}, 
-				{7,4,7,3,8,4,6,4,7,5}, 
-				{7,5,8,5,7,6,7,4,6,5}, 
-				{7,6,6,6,7,5,8,6}, 
-				{8,0,8,1,7,0,9,0}, 
-				{8,1,8,2,9,1,7,1,8,0}, 
-				{8,2,8,1,7,2,8,3}, 
-				{8,3,8,2,7,3,8,4}, 
-				{8,4,8,5,8,3,7,4}, 
-				{8,5,9,5,8,4,7,5,8,6}, 
-				{8,6,8,5,7,6,9,6}, 
-				{9,0,9,1,8,0}, 
-				{9,1,8,1,9,2,9,0}, 
-				{9,2,9,1,9,3}, 
-				{9,3,9,2,9,4}, 
-				{9,4,9,5,9,3}, 
-				{9,5,8,5,9,4,9,6}, 
-				{9,6,9,5,8,6} 
-				};
-		for(int i = 0; i<nicksGraph.length;i++)
-		{
-			int x = nicksGraph[i][0];
-			int y = nicksGraph[i][1];
-			Coord c = new Coord(x,y);
-			Node<Coord> node = robotGraph.nodeWith(c);
-			for(int j = 2; j<nicksGraph[i].length;j = j+2)
-			{
-				int sx = nicksGraph[i][j];
-				int sy = nicksGraph[i][j+1];
-				Coord sc = new Coord(sx,sy);
-				Node<Coord> s = robotGraph.nodeWith(sc);
-				node.addSuccessor(s);
-			}
-		}
 		
-		for(Map.Entry<Coord,Node<Coord>> e: robotGraph.getNodes().entrySet())
-		{
-			Coord c = e.getKey();
-			Node<Coord> node = e.getValue();
-			System.out.print(c+":" );
-			for(Node<Coord> n : node.getSuccessors())
-			{
-				System.out.print(n.getContent()+", ");
-			}
-			System.out.println();
-		}
+	RPLineMap lineMap = MapUtils.create2014Map2();
+	IGridMap grid = GridMapViewer.createGridMap(lineMap, 10, 7, 14, 31, 30);
+	Graph testGraph = new Graph(grid);
 		
-		Node<Coord> start = robotGraph.nodeWith(new Coord(0,0));
-		Node<Coord> goal = robotGraph.nodeWith(new Coord(0,2));
-		GoalPredicate zeroTwo = new GoalPredicate(new Coord(0,2));
-		Cost costFunction = new Cost(robotGraph,start,goal);
+		Node<Coord> start = testGraph.nodeWith(new Coord(0,0));
+		Node<Coord> goal = testGraph.nodeWith(new Coord(9,4));
+		GoalPredicate zeroTwo = new GoalPredicate(new Coord(9,4));
+		Cost costFunction = new Cost(testGraph,start,goal);
 		PriorityQueue<Node<Coord>,Integer> testPri = new PriorityQueue<Node<Coord>,Integer>(costFunction);
-		System.out.println(robotGraph.findPathFrom(start, zeroTwo, testPri));*/
+		System.out.println(testGraph.findPathFrom(start, zeroTwo, testPri));
 		
 		
-		
-	}
+	}*/
 
 }
