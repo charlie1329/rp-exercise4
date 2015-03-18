@@ -1,7 +1,6 @@
 package rp.robotics.whereAmI;
 
 import rp.robotics.mapping.RPLineMap;
-import lejos.geom.Line;
 import lejos.geom.Point;
 import lejos.robotics.navigation.Pose;
 

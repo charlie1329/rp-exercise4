@@ -11,6 +11,8 @@ import lejos.geom.Rectangle;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import rp.robotics.whereAmI.GridMap;
+
 public class GridMapTest {
 
 	/***
@@ -34,8 +36,8 @@ public class GridMapTest {
 	 */
 	public static IGridMap createGridMap(RPLineMap _lineMap, int _gridXSize,
 			int _gridYSize, float _xStart, float _yStart, float _cellSize) {
-		return new NicksGridMap(_gridXSize, _gridYSize, _xStart, _yStart,
-				_cellSize, _lineMap);
+		return new GridMap(_lineMap,_gridXSize, _gridYSize, _xStart, _yStart,
+				_cellSize);
 	}
 
 	public static IGridMap createRectangularGridMap(int _xJunctions,

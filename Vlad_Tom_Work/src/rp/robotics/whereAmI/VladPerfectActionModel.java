@@ -1,21 +1,15 @@
-package rp.robotics.localisation;
+package rp.robotics.whereAmI;
 
+import rp.robotics.localisation.ActionModel;
+import rp.robotics.localisation.GridPositionDistribution;
 import rp.robotics.mapping.Heading;
 
 /**
- * Example structure for an action model that should move the probabilities 1
- * cell in the requested direction. In the case where the move would take the
- * robot into an obstacle or off the map, this model assumes the robot stayed in
- * one place. This is the same as the model presented in Robot Programming
- * lecture on action models.
- * 
- * Note that this class doesn't actually do this, instead it shows you a
- * <b>possible</b> structure for your action model.
  * 
  * @author Vlad-Marian Toncu
  * 
  */
-public class PerfectActionModel implements ActionModel {
+public class VladPerfectActionModel implements ActionModel {
 	@Override
 	public GridPositionDistribution updateAfterMove(
 			GridPositionDistribution _from, Heading _heading) {
@@ -27,9 +21,6 @@ public class PerfectActionModel implements ActionModel {
 		if (_heading == Heading.PLUS_X) {
 			movePlusX(to);
 		} else if (_heading == Heading.PLUS_Y) {
-			// you could implement a movePlusY etc. or you could find a way do
-			// do all moves in a single method. Hint: all changes are just + or
-			// - 1 to an x or y value.
 			movePlusY(to);
 		} else if (_heading == Heading.MINUS_X) {
 			moveMinusX(to);
@@ -58,18 +49,6 @@ public class PerfectActionModel implements ActionModel {
 
 				// make sure to respect obstructed grid points
 				if (!_to.isObstructed(x, y)) {
-					// the action model should work out all of the different
-					// ways (x,y) in the _to grid could've been reached based on
-					// the _from grid and the move taken (in this case
-					// HEADING.PLUS_X)
-
-					// for example if the only way to have got to _to (x,y) was
-					// from _from (x-1, y) (i.e. there was a PLUS_X move from
-					// (x-1, y) then you write the value from _from (x-1, y) to
-					// the _to (x, y) value
-
-					// The below code does not translate the value, just copies
-					// it to the same position
 					nonobstructed++;
 					// position before move
 					int fromX = x-1;
@@ -131,18 +110,6 @@ public class PerfectActionModel implements ActionModel {
 
 				// make sure to respect obstructed grid points
 				if (!_to.isObstructed(x, y)) {
-					// the action model should work out all of the different
-					// ways (x,y) in the _to grid could've been reached based on
-					// the _from grid and the move taken (in this case
-					// HEADING.PLUS_X)
-
-					// for example if the only way to have got to _to (x,y) was
-					// from _from (x-1, y) (i.e. there was a PLUS_X move from
-					// (x-1, y) then you write the value from _from (x-1, y) to
-					// the _to (x, y) value
-
-					// The below code does not translate the value, just copies
-					// it to the same position
 					nonobstructed++;
 					// position before move
 					int fromX = x;
@@ -203,18 +170,6 @@ public class PerfectActionModel implements ActionModel {
 
 				// make sure to respect obstructed grid points
 				if (!_to.isObstructed(x, y)) {
-					// the action model should work out all of the different
-					// ways (x,y) in the _to grid could've been reached based on
-					// the _from grid and the move taken (in this case
-					// HEADING.PLUS_X)
-
-					// for example if the only way to have got to _to (x,y) was
-					// from _from (x-1, y) (i.e. there was a PLUS_X move from
-					// (x-1, y) then you write the value from _from (x-1, y) to
-					// the _to (x, y) value
-
-					// The below code does not translate the value, just copies
-					// it to the same position
 					nonobstructed++;
 					// position before move
 					int fromX = x+1;
@@ -276,18 +231,6 @@ public class PerfectActionModel implements ActionModel {
 
 				// make sure to respect obstructed grid points
 				if (!_to.isObstructed(x, y)) {
-					// the action model should work out all of the different
-					// ways (x,y) in the _to grid could've been reached based on
-					// the _from grid and the move taken (in this case
-					// HEADING.PLUS_X)
-
-					// for example if the only way to have got to _to (x,y) was
-					// from _from (x-1, y) (i.e. there was a PLUS_X move from
-					// (x-1, y) then you write the value from _from (x-1, y) to
-					// the _to (x, y) value
-
-					// The below code does not translate the value, just copies
-					// it to the same position
 					nonobstructed++;
 					// position before move
 					int fromX = x;

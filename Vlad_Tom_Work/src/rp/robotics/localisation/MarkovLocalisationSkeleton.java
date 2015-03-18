@@ -14,6 +14,7 @@ import rp.robotics.simulation.SimulatedRobot;
 import rp.robotics.visualisation.GridMapViewer;
 import rp.robotics.visualisation.GridPositionDistributionVisualisation;
 import rp.robotics.visualisation.KillMeNow;
+import rp.robotics.whereAmI.VladPerfectActionModel;
 
 public class MarkovLocalisationSkeleton {
 
@@ -101,7 +102,7 @@ public class MarkovLocalisationSkeleton {
 
 	public void run() {
 
-		ActionModel actionModel = new PerfectActionModel();
+		ActionModel actionModel = new VladPerfectActionModel();
 		SensorModel sensorModel = new PerfectSensorModel();
 
 		int horizontal = 3;

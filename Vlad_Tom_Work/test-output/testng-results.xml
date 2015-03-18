@@ -2,20 +2,20 @@
 <testng-results skipped="0" failed="0" total="3" passed="3">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="318" started-at="2015-03-08T14:19:33Z" finished-at="2015-03-08T14:19:33Z">
+  <suite name="Default suite" duration-ms="283" started-at="2015-03-18T15:37:23Z" finished-at="2015-03-18T15:37:23Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="318" started-at="2015-03-08T14:19:33Z" finished-at="2015-03-08T14:19:33Z">
+    <test name="Default test" duration-ms="283" started-at="2015-03-18T15:37:23Z" finished-at="2015-03-18T15:37:23Z">
       <class name="rp.robotics.mapping.GridMapTest">
-        <test-method status="PASS" signature="rangeToObstacleTest()[pri:0, instance:rp.robotics.mapping.GridMapTest@1117f44]" name="rangeToObstacleTest" duration-ms="80" started-at="2015-03-08T14:19:33Z" finished-at="2015-03-08T14:19:33Z">
+        <test-method status="PASS" signature="rangeToObstacleTest()[pri:0, instance:rp.robotics.mapping.GridMapTest@1117f44]" name="rangeToObstacleTest" duration-ms="79" started-at="2015-03-18T15:37:23Z" finished-at="2015-03-18T15:37:23Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- rangeToObstacleTest -->
-        <test-method status="PASS" signature="rectangularMapTest()[pri:0, instance:rp.robotics.mapping.GridMapTest@1117f44]" name="rectangularMapTest" duration-ms="156" started-at="2015-03-08T14:19:33Z" finished-at="2015-03-08T14:19:33Z">
+        <test-method status="PASS" signature="rectangularMapTest()[pri:0, instance:rp.robotics.mapping.GridMapTest@1117f44]" name="rectangularMapTest" duration-ms="120" started-at="2015-03-18T15:37:23Z" finished-at="2015-03-18T15:37:23Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- rectangularMapTest -->
-        <test-method status="PASS" signature="testMapTest()[pri:0, instance:rp.robotics.mapping.GridMapTest@1117f44]" name="testMapTest" duration-ms="16" started-at="2015-03-08T14:19:33Z" finished-at="2015-03-08T14:19:33Z">
+        <test-method status="PASS" signature="testMapTest()[pri:0, instance:rp.robotics.mapping.GridMapTest@1117f44]" name="testMapTest" duration-ms="38" started-at="2015-03-18T15:37:23Z" finished-at="2015-03-18T15:37:23Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testMapTest -->
