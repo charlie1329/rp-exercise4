@@ -15,6 +15,7 @@ public class Node<A> {
 	private A content;
 	private Collection<Node<A>> successors;
 	private Maybe<Node<A>> parent;//used to help find path
+	private boolean blocked;//used to determine whether a route is blocked for the robot
 
 	/**constructor initialises attributes
 	 * 
@@ -26,6 +27,7 @@ public class Node<A> {
 		this.content = content;
 		this.successors = new SimpleSet<Node<A>>();
 		this.parent = new Nothing<Node<A>>();//using maybe type to prevent null pointers being thrown about
+		this.blocked = false;
 	}
 	
 	/**allows the addition of successors
@@ -103,5 +105,23 @@ public class Node<A> {
 	public void setParent(Maybe<Node<A>> currentParent)
 	{
 		this.parent = currentParent;
+	}
+	
+	/**this method allows us to change the status of whether the node is part of a blocked edge
+	 * 
+	 * @param blocked the new value of blocked
+	 */
+	public void setBlocked(boolean blocked)
+	{
+		this.blocked = blocked;
+	}
+	
+	/**method returns whether or not the node is part of a blocked edge
+	 * 
+	 * @return the blocked status
+	 */
+	public boolean getBlocked()
+	{
+		return this.blocked;
 	}
 }

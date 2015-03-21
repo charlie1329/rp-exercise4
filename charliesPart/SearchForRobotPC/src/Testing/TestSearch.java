@@ -32,7 +32,7 @@ public class TestSearch {
 	@BeforeClass
 	public void setUp()
 	{
-		RPLineMap lineMap = MapUtils.create2014Map2();
+		RPLineMap lineMap = MapUtils.create2015Map1();
 		grid = GridMapViewer.createGridMap(lineMap, 10, 7, 14, 31, 30);
 		this.testGraph = new Graph(grid);
 		this.startNodes = new Nil<Coord>();

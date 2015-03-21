@@ -19,7 +19,6 @@ public class JunctionBehavior implements Behavior{
 	private boolean bothHit;
 	private final double threshold;
 	private IList<MovementChecker> path;
-	private final int RIGHTANGLEWITHERROR;
 	private boolean firstTime;
 	private Pose pose;
 	private DetectObstacles obstacleChecker;
@@ -32,7 +31,6 @@ public class JunctionBehavior implements Behavior{
 		this.geoff = geoff;
 		this.bothHit = true;//explicitly making it activate straight away
 		this.threshold =80.0;
-		this.RIGHTANGLEWITHERROR = 95;
 		this.path = path;
 		this.firstTime = true;
 		this.pose = pose;
@@ -106,6 +104,28 @@ public class JunctionBehavior implements Behavior{
 	public void setBothHit(boolean bothHit)
 	{
 		this.bothHit = bothHit;
+	}
+	
+	/**returning the path so it can be used elsewhere
+	 * 
+	 */
+	public IList<MovementChecker> getPath()
+	{
+		return this.path;
+	}
+	
+	/**allows the robots path to be changed. Useful for localisation and dynamic obstacle detection
+	 * 
+	 * @param newPath the new path
+	 */
+	public void setPath(IList<MovementChecker> newPath)
+	{
+		this.path = newPath;
+		if(this.path.size() != 0)
+		{
+			this.path.head().run();//need to run the first action immediately rather than waiting for the next junction
+			this.path = this.path.tail();
+		}
 	}
 	
 	

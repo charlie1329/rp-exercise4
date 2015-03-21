@@ -34,22 +34,24 @@ public class GridSearch
 	private Arbitrator arby;
 	private IGridMap grid;
 	private Pose pose;
-	
+	private SearchToAction search;
+	private DetectObstacles detector;
 	/**constructor sets up everything for the task
 	 * 
 	 */
 	public GridSearch(GeoffSetUp geoff,Coord startC, Coord interC, Coord goalC) 
 	{
 		this.geoff = geoff;
-		RPLineMap lineMap = MapUtils.create2014Map2();
-		this.grid = new NicksGridMap(10, 7, 14, 31, 30, lineMap);
+		RPLineMap lineMap = MapUtils.create2015Map1();
+		this.grid = new NicksGridMap(12, 8, 15, 15, 30, lineMap);
 		this.graph = new Graph(grid);
 		Node<Coord> start = this.graph.nodeWith(startC);
 		Node<Coord> inter = this.graph.nodeWith(interC);
 		Node<Coord> goal = this.graph.nodeWith(goalC);
 		this.pose = new Pose(startC.getX(),startC.getY(),0);
-		SearchToAction search = new SearchToAction(start, inter, goal, geoff,pose, graph);
-		this.path = search.getCompleteActionSet();
+		this.search = new SearchToAction(start, inter, goal, geoff,this.pose, this.graph);
+		this.path = this.search.getCompleteActionSet();
+		this.detector =  new DetectObstacles(this.geoff,this.grid,this.graph,this.search);
 	}
 	
 	/**allows path to be retrieved
@@ -69,7 +71,7 @@ public class GridSearch
 		Button.waitForAnyPress();
 		DriveForwardBehavior drive = new DriveForwardBehavior(this.geoff);
 		TurnBehavior turn = new TurnBehavior(this.geoff);
-		JunctionBehavior junction = new JunctionBehavior(this.geoff, this.getPath(),this.pose, new DetectObstacles(this.geoff,this.grid));
+		JunctionBehavior junction = new JunctionBehavior(this.geoff, this.getPath(),this.pose,this.detector);
 		CalibrateBehavior calibrate = new CalibrateBehavior(this.geoff);
 		this.arby = new Arbitrator(new Behavior[]{drive, turn, junction, calibrate});
 		arby.start();

@@ -3,12 +3,10 @@ package graphs;
 import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
-
-import aStarFunctions.Cost;
 import rp.*;
 import rp.robotics.mapping.IGridMap;
-import rp.robotics.mapping.MapUtils;
-import rp.robotics.mapping.RPLineMap;
+
+//import rp.robotics.visualisation.GridMapViewer;
 import lists_and_maybe.*;
 import data_structures.*;
 
@@ -179,14 +177,28 @@ public class Graph {
 	 */
 	public Maybe<IList<Node<Coord>>> findPathFrom(Node<Coord> x, Predicate<Coord> p, DataStructure<Node<Coord>> ds)
 	{
-	
+		for(int i = 0; i < this.grid.getXSize(); i++)
+		{
+			for(int j = 0; j < this.grid.getYSize(); j++)
+			{
+				Coord currentCoord = new Coord(i,j);
+				this.nodeWith(currentCoord).setParent(new Nothing<Node<Coord>>());//need to reset parents so dynamic obstacles work
+			}//this also cleans up from any previous runs on the graph
+		}
+		
 		Collection<Node<Coord>> set = new SimpleSet<Node<Coord>>();//using for efficiency
 		this.links = new HashMap<Node<Coord>,Maybe<Node<Coord>>>();//maybe used to stop null pointers
 		ds.insertItem(x);
+		System.out.println("searching");
 		while(!ds.isEmpty())//this gives us precautions to allow use of some of the'unsafe' methods as they will never be used in such a scenario
 		{
 			if(set.contains(ds.getFront().fromMaybe()))//fromMaybe can be used as Nothing will never enter this loop
 			{
+				ds.removeFront();
+			}
+			else if(ds.getFront().fromMaybe().getBlocked() && (ds.getFront().fromMaybe().getParent().size() != 0) && ds.getFront().fromMaybe().getParent().fromMaybe().getBlocked())//stops blocked edges being used in reconstructions
+			{ //the parent size != 0 is required to prevent the use of nothing in from maybe hence the really long if statement
+				System.out.println("blockage");
 				ds.removeFront();
 			}
 			else if(p.holds(ds.getFront().fromMaybe().getContent()))
@@ -217,6 +229,20 @@ public class Graph {
 				ds.insertList(toExpand.getSuccessorsList());
 			}
 		}
+		
+		for(int i2 = 0; i2 < this.grid.getXSize(); i2++)
+		{
+			for(int j2 = 0; j2 < this.grid.getYSize(); j2++)
+			{//for this use, we will assume the blockage is there for one iteration; if it is still there the robot will re-detect it
+				//this means that we can re-test making our system more versatile rather than stopping the use of an edge.
+				Coord currentCoord = new Coord(i2,j2);
+				this.nodeWith(currentCoord).setBlocked(false);//need to reset blocking
+			}
+		}
+		
+		
+		
+		
 		return new Nothing<IList<Node<Coord>>>();
 		
 	}
@@ -228,16 +254,35 @@ public class Graph {
 	/*public static void main (String[] args)
 	{
 		
-	RPLineMap lineMap = MapUtils.create2014Map2();
-	IGridMap grid = GridMapViewer.createGridMap(lineMap, 10, 7, 14, 31, 30);
-	Graph testGraph = new Graph(grid);
+		RPLineMap lineMap = MapUtils.create2014Map2();
+		IGridMap grid = GridMapViewer.createGridMap(lineMap, 10, 7, 14, 31, 30);
+		Graph testGraph = new Graph(grid);
 		
 		Node<Coord> start = testGraph.nodeWith(new Coord(0,0));
-		Node<Coord> goal = testGraph.nodeWith(new Coord(9,4));
-		GoalPredicate zeroTwo = new GoalPredicate(new Coord(9,4));
+		Node<Coord> goal = testGraph.nodeWith(new Coord(3,0));
+		GoalPredicate zeroTwo = new GoalPredicate(new Coord(3,0));
 		Cost costFunction = new Cost(testGraph,start,goal);
 		PriorityQueue<Node<Coord>,Integer> testPri = new PriorityQueue<Node<Coord>,Integer>(costFunction);
 		System.out.println(testGraph.findPathFrom(start, zeroTwo, testPri));
+		
+		Node<Coord> start2 = testGraph.nodeWith(new Coord(3,0));
+		Node<Coord> goal2 = testGraph.nodeWith(new Coord(4,1));
+		GoalPredicate zeroTwo2 = new GoalPredicate(new Coord(4,1));
+		Cost costFunction2 = new Cost(testGraph,start2,goal2);
+		PriorityQueue<Node<Coord>,Integer> testPri2 = new PriorityQueue<Node<Coord>,Integer>(costFunction2);
+		System.out.println(testGraph.findPathFrom(start2, zeroTwo2, testPri2));
+		
+		testGraph.nodeWith(new Coord(2,0)).setBlocked(true);
+		testGraph.nodeWith(new Coord(3,0)).setBlocked(true);
+		
+		
+		Node<Coord> start3 = testGraph.nodeWith(new Coord(2,0));
+		Node<Coord> goal3 = testGraph.nodeWith(new Coord(3,0));
+		GoalPredicate zeroTwo3 = new GoalPredicate(new Coord(3,0));
+		Cost costFunction3 = new Cost(testGraph,start3,goal3);
+		PriorityQueue<Node<Coord>,Integer> testPri3 = new PriorityQueue<Node<Coord>,Integer>(costFunction3);
+		System.out.println(testGraph.findPathFrom(start3, zeroTwo3, testPri3));
+		
 		
 		
 	}*/
