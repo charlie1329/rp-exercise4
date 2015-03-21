@@ -7,6 +7,7 @@ import ActionsForRobot.MovementChecker;
 import ActionsForRobot.SoundPrompt;
 import aStarFunctions.Cost;
 import lejos.robotics.navigation.Pose;
+import lejos.util.Delay;
 import graphs.Coord;
 import graphs.GoalPredicate;
 import graphs.Graph;
@@ -49,7 +50,7 @@ public class SearchToAction
 	/**method will return a list of actions for the robot to adhere to
 	 * 
 	 */
-	private IList<MovementChecker> getListOfActions(Node<Coord> start, Node<Coord> goal)
+	public IList<MovementChecker> getListOfActions(Node<Coord> start, Node<Coord> goal)
 	{
 		Cost cost = new Cost(this.graph,start,goal);
 		PriorityQueue<Node<Coord>,Integer> priQueue = new PriorityQueue<Node<Coord>,Integer>(cost);
@@ -89,6 +90,24 @@ public class SearchToAction
 		}
 		return actions;
 		
+	}
+	
+	/**returns the first destinations
+	 * 
+	 * @return the first destination
+	 */
+	public Node<Coord> getInter()
+	{
+		return this.intermediate;
+	}
+	
+	/**returns this goal node
+	 * 
+	 * @return the second destination
+	 */
+	public Node<Coord> getGoal()
+	{
+		return this.goal;
 	}
 	
 	/**method will return the complete set of instructions for the robot
