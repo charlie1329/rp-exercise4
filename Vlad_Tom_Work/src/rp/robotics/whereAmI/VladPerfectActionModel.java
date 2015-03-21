@@ -59,7 +59,7 @@ public class VladPerfectActionModel implements ActionModel {
 					int toX = x;
 					int toY = y;
 					// set probability for position after move
-					if(fromX==0)
+					if(fromX==0 && !_to.isObstructed(x-1, y))
 					{
 						    _to.setProbability(fromX, fromY, 0);
 					}
@@ -119,7 +119,7 @@ public class VladPerfectActionModel implements ActionModel {
 					// position after move
 					int toX = x;
 					int toY = y;
-					if(fromY==0)
+					if(fromY==0 && !_to.isObstructed(x, y-1))
 					{
 						    _to.setProbability(fromX, fromY, 0);
 					}
@@ -179,7 +179,7 @@ public class VladPerfectActionModel implements ActionModel {
 					int toX = x;
 					int toY = y;
 					// set probability for position after move
-					if(fromX==_to.getGridWidth()-1)
+					if(fromX==_to.getGridWidth()-1 && !_to.isObstructed(x+1, y))
 					{
 						    _to.setProbability(fromX, fromY, 0);
 					}
@@ -240,7 +240,7 @@ public class VladPerfectActionModel implements ActionModel {
 					// position after move
 					int toX = x;
 					int toY = y;
-					if(fromY==_to.getGridHeight()-1)
+					if(fromY==_to.getGridHeight()-1 && !_to.isObstructed(x, y+1))
 					{
 						    _to.setProbability(fromX, fromY, 0);
 					}
