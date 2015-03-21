@@ -3,12 +3,11 @@
 <suite name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="rp.robotics.whereAmI.TestActionModel">
+      <class name="rp.robotics.mapping.GridMapTest">
         <methods>
-          <include name="Test"/>
-          <include name="setUp"/>
+          <include name="rectangularMapTest"/>
         </methods>
-      </class> <!-- rp.robotics.whereAmI.TestActionModel -->
+      </class> <!-- rp.robotics.mapping.GridMapTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

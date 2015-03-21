@@ -39,16 +39,16 @@ public class GridMapViewer {
 	public void run() {
 		JFrame frame = new JFrame("Map Viewer");
 		frame.addWindowListener(new KillMeNow());
-		RPLineMap lineMap = MapUtils.create2014Map2();
+		RPLineMap lineMap = MapUtils.create2015Map1();
 
 		// grid map dimensions for this line map
-		int xJunctions = 10;
-		int yJunctions = 7;
+		int xJunctions = 14;
+		int yJunctions = 8;
 		float junctionSeparation = 30;
 
 		// position of grid map 0,0
-		int xInset = 14;
-		int yInset = 31;
+		int xInset = 15;
+		int yInset = 15;
 
 		IGridMap gridMap = createGridMap(lineMap, xJunctions, yJunctions,
 				xInset, yInset, junctionSeparation);
@@ -73,13 +73,16 @@ public class GridMapViewer {
 						Heading.toDegrees(Heading.MINUS_X)));
 
 		// view the map with 2 pixels as 1 cm
+		// flip the y axis to get RH rule correct although it's ugly
+		boolean flipYAxis = false;
 		GridMapVisualisation mapVis = new GridMapVisualisation(gridMap,
-				lineMap, 2);
-
+				lineMap, 2, flipYAxis);
+		
 		frame.add(mapVis);
 		frame.pack();
 		frame.setSize(800, 600);
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/**

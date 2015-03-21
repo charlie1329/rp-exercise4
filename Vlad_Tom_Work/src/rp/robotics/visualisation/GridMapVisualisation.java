@@ -24,9 +24,14 @@ public class GridMapVisualisation extends LineMapVisualisation {
 	protected IGridMap m_gridMap;
 
 	public GridMapVisualisation(IGridMap _gridMap, LineMap _lineMap,
-			float _scaleFactor) {
-		super(_lineMap, _scaleFactor);
+			float _scaleFactor, boolean _flip) {
+		super(_lineMap, _scaleFactor, _flip);
 		m_gridMap = _gridMap;
+	}
+
+	public GridMapVisualisation(IGridMap _gridMap, LineMap _lineMap,
+			float _scaleFactor) {
+		this(_gridMap, _lineMap, _scaleFactor, false);
 	}
 
 	private void connectToNeighbour(Graphics2D _g2, int _x, int _y, int _dx,
@@ -61,7 +66,7 @@ public class GridMapVisualisation extends LineMapVisualisation {
 
 		// and visualise valid connections
 		for (int x = 0; x < m_gridMap.getXSize(); x++) {
-			for (int y = 0; y < m_gridMap.getXSize(); y++) {
+			for (int y = 0; y < m_gridMap.getYSize(); y++) {
 
 				if (m_gridMap.isValidGridPosition(x, y)) {
 					connectToNeighbour(_g2, x, y, 1, 0);

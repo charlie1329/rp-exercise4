@@ -42,11 +42,7 @@ public class MarkovLocalisationSkeleton {
 		m_distribution = new GridPositionDistribution(m_gridMap);
 		m_translationAmount = _translationAmount;
 	}
-	
-	public GridPositionDistribution getDistribution()
-	{
-		return this.m_distribution;
-	}
+
 	/**
 	 * Optionally run the visualisation of the robot and localisation process.
 	 * This is not necessary to run the localisation and could be removed once
@@ -103,7 +99,10 @@ public class MarkovLocalisationSkeleton {
 		// A short delay so we can see what's going on
 		Delay.msDelay(1000);
 	}
-
+	public GridPositionDistribution getDistribution()
+	{
+		return this.m_distribution;
+	}
 	public void run() {
 
 		ActionModel actionModel = new VladPerfectActionModel();

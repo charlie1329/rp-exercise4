@@ -77,7 +77,7 @@ public class TestActionModel {
 		ml.move(junctionSeparation, Heading.PLUS_X, actionmodel, sensorModel);
 		ml.move(junctionSeparation, Heading.PLUS_Y, actionmodel, sensorModel);
 		ml.move(junctionSeparation, Heading.PLUS_Y, actionmodel, sensorModel);
-		ml.move(junctionSeparation, Heading.MINUS_Y, actionmodel, sensorModel);
+		ml.move(junctionSeparation, Heading.MINUS_X, actionmodel, sensorModel);
 		m_distribution=ml.getDistribution();
 		for (int y = 0; y <m_distribution.getGridHeight(); y++)
 			for (int x=0;x<m_distribution.getGridWidth();x++)
@@ -89,7 +89,6 @@ public class TestActionModel {
 					maxY=y;
 				}
 			}
-		//Point maxPoint=m_gridMap.getCoordinatesOfGridPosition(maxX, maxY);
 		int robotX=(int)((m_robot.getPose().getLocation().x-startGridX)/junctionSeparation);
 		int robotY=(int)((m_robot.getPose().getLocation().y-startGridY)/junctionSeparation);
 		assertEquals(true,m_distribution.getProbability(robotX, robotY)==m_distribution.getProbability(maxX,maxY));

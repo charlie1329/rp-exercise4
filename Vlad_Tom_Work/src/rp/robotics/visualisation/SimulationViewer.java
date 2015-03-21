@@ -3,6 +3,7 @@ package rp.robotics.visualisation;
 import lejos.robotics.navigation.Pose;
 import rp.robotics.control.RandomGridWalk;
 import rp.robotics.simulation.SimulatedRobot;
+
 /**
  * Demonstrates the use, and visualisation, of a simulated simple robot on a
  * line map;
@@ -35,8 +36,7 @@ public class SimulationViewer {
 		mapViz.addRobot(robot);
 
 		// Create a behaviour to drive it around
-		//RandomGridWalk walk = new RandomGridWalk(robot, junctionSeparation);
-		RandomGridWalk walk=new RandomGridWalk(robot,junctionSeparation,1000);
+		RandomGridWalk walk = new RandomGridWalk(robot, junctionSeparation);
 		walk.run();
 
 	}

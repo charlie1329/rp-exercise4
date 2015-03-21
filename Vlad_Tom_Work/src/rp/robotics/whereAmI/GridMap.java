@@ -1,5 +1,6 @@
 package rp.robotics.whereAmI;
 
+import rp.robotics.mapping.Heading;
 import rp.robotics.mapping.RPLineMap;
 import lejos.geom.Point;
 import lejos.robotics.navigation.Pose;
@@ -73,7 +74,7 @@ public class GridMap implements rp.robotics.mapping.IGridMap{
 	 * Checks if there is a transition between 2 points (no obstacle between two connected points
 	 */
 	public boolean isValidTransition(int _x1, int _y1, int _x2, int _y2) {
-		float xCoord1=this.xStart+_x1*this.cellSize;
+		/*float xCoord1=this.xStart+_x1*this.cellSize;
 		float xCoord2=this.xStart+_x2*this.cellSize;
 		float yCoord1=this.yStart+_y1*this.cellSize;
 		float yCoord2=this.yStart+_y2*this.cellSize;
@@ -91,19 +92,55 @@ public class GridMap implements rp.robotics.mapping.IGridMap{
 			}
 			else if(_y1==_y2)
 			{
-				{
+				
 					for(float j=Math.min(xCoord1, xCoord2);j<=Math.max(xCoord1, xCoord2);j++)
 					{
 						if(!this.linemap.inside(new Point(j,yCoord1)))
 							return false;
 					}
-				}
 				return true;
+			}
+			else return false;
+		}
+		else return false;
+		*/
+		if(!this.isObstructed(_x1, _y1) && !this.isObstructed(_x2, _y2) && this.isValidGridPosition(_x1, _y1) && this.isValidGridPosition(_x2, _y2))
+		{	
+		if(_y1==_y2)
+		{
+			if(_x1<_x2)
+			{
+				if(this.rangeToObstacleFromGridPosition(_x1, _y1, Heading.toDegrees(Heading.PLUS_X))<=this.cellSize)
+					return false;
+				else return true;
+			}
+			else if(_x2<_x1)
+			{
+				if(this.rangeToObstacleFromGridPosition(_x2, _y1, Heading.toDegrees(Heading.PLUS_X))<=this.cellSize)
+					return false;
+				else return true;
+			}
+			else return true;
+		}
+		else if(_x1==_x2)
+		{
+			if(_y1<_y2)
+			{
+				if(this.rangeToObstacleFromGridPosition(_x1, _y1, Heading.toDegrees(Heading.PLUS_Y))<=this.cellSize)
+					return false;
+				else return true;
+			}
+			else if(_y2<_y1)
+			{
+				if(this.rangeToObstacleFromGridPosition(_x1, _y2, Heading.toDegrees(Heading.PLUS_Y))<=this.cellSize)
+					return false;
+				else return true;
 			}
 			else return true;
 		}
 		else return false;
-		
+		}
+		else return false;
 	}
 
 	@Override
