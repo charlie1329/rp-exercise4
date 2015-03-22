@@ -2,6 +2,8 @@ package rp.robotics.whereAmI;
 
 import java.util.HashMap;
 
+import rp.robotics.whereAmI.ProbabilityThat.EventRangeSyntax;
+
     public class Model {
         HashMap<Double, ProbabilityThat.EventSyntax> sensorModel =
                 new HashMap<Double, ProbabilityThat.EventSyntax>();
@@ -9,28 +11,34 @@ import java.util.HashMap;
         private final ProbabilityThat probabilityThat = new ProbabilityThat();
         
         public Model(){
-            sensorModel.put(7.50,  probabilityThat.NormallyDistributedVariable(04.45, 2.58));
-            sensorModel.put(22.50, probabilityThat.NormallyDistributedVariable(22.61, 3.06));
-            sensorModel.put(37.50, probabilityThat.NormallyDistributedVariable(36.22, 3.71));
-            sensorModel.put(52.50, probabilityThat.NormallyDistributedVariable(52.70, 3.25));
-            sensorModel.put(67.50, probabilityThat.NormallyDistributedVariable(67.45, 2.50));
-            sensorModel.put(82.50, probabilityThat.NormallyDistributedVariable(80.12, 0.54));
+        	sensorModel.put(0.000, probabilityThat.NormallyDistributedVariable(0.102, 3.00));
+            sensorModel.put(15.00, probabilityThat.NormallyDistributedVariable(14.75, 3.21));
+            sensorModel.put(45.00, probabilityThat.NormallyDistributedVariable(46.07, 3.37));
+            sensorModel.put(75.00, probabilityThat.NormallyDistributedVariable(75.53, 3.35));
+            
+            
+            sensorModel.put(105.0, probabilityThat.NormallyDistributedVariable(105.0, 3.40));
+            sensorModel.put(135.0, probabilityThat.NormallyDistributedVariable(135.0, 3.60));
+            sensorModel.put(165.0, probabilityThat.NormallyDistributedVariable(165.0, 3.80));
+            sensorModel.put(195.0, probabilityThat.NormallyDistributedVariable(195.0, 4.00));
+            sensorModel.put(225.0, probabilityThat.NormallyDistributedVariable(225.0, 4.20));
+            sensorModel.put(255.0, probabilityThat.NormallyDistributedVariable(255.0, 4.40));
         }
 
         public ProbabilityThat.EventSyntax probabilityGivenSensorReading(double reading){
-            double lower = 7.5;
-            for (double key = 7.5; key <= 82.50; key += 15){
-                if (key > lower && key <= reading)
-                    lower = key;
-            }
-
-            double nearest = lower;
-            if (lower < 82.5){
-                if (reading - lower > 7.5){
-                    nearest += 15;
-                }
-            }
-
-            return sensorModel.get(nearest);
+        	 double lower = 15;
+        	 for (double key = 15; key <= 255; key += 30){
+        		 if (key > lower && key <= reading)
+        			 lower = key;
+        	 }
+        	 
+        	 double nearest = lower;
+        	 if (lower < 255){
+        	 	if (reading - lower > 15){
+        	 		nearest += 30;
+        	 	}
+        	 }
+        	 
+        	 return sensorModel.get(nearest);
         }
     }
