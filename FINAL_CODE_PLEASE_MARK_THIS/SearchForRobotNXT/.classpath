@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.lejos.nxt.ldt.LEJOS_LIBRARY_CONTAINER/nxt"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Robot-Utils"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SearchForRobotPC"/>
+	<classpathentry kind="lib" path="C:/Users/charl_000/Downloads/rp14-solutions.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rp14-exercise4"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rp-reusable"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Exercise3"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ActionsForRobotEx4"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ObstacleDetection"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/VladsGridMap"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LocalisationNXT"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
